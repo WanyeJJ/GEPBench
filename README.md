@@ -1,4 +1,4 @@
-# AI4PDE Dataset Generation Guide
+# GEP Dataset Generation
 
 This project provides a suite of scripts to generate large-scale datasets for various physical systems governed by Partial Differential Equations (PDEs). It focuses on Generalized Eigenvalue Problems (GEP) and uses MPI with PETSc/SLEPc for high-performance, parallel computation.
 
