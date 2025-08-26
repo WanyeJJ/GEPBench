@@ -80,7 +80,7 @@ mpirun -np 4 python3 datasets/build_thermal.py --out data/thermal_dataset --num 
 ```bash
 mpirun -np 4 python3 datasets/build_piezo.py --out data/piezo_dataset --num 100 --nx 71 --ny 71 --nev 20 --no_solve
 ```
-3. Output Structure
+## 3. Output Structure
 
 After successful execution, each dataset will be organized in the specified output directory with the following structure:
 
