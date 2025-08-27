@@ -49,36 +49,36 @@ mpirun -np <num_processes> python3 datasets/<script_name>.py --out <output_dir> 
 
 ### 2.1 EGFR Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 20 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
 
 ```bash
-mpirun -np 4 python3 datasets/build_egfr_parallel.py --out data/egfr_dataset --num 100 --nbas 10000 --nev 20
+mpirun -np 4 python3 datasets/build_egfr_parallel.py --out data/egfr_dataset --num 100 --nbas 10000 --nev 500
 ```
 
 ### 2.2 Electromagnetic Cavity (EM Cavity) Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 20 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
 
 ```bash
-mpirun -np 4 python3 datasets/build_em_cavity.py --out data/em_cavity_dataset --num 100 --nx 100 --ny 100 --nev 20
+mpirun -np 4 python3 datasets/build_em_cavity.py --out data/em_cavity_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
 ### 2.3 Plate Vibration Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 20 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
 ```bash
-mpirun -np 4 python3 datasets/build_plate.py --out data/plate_dataset --num 100 --nx 100 --ny 100 --nev 20
+mpirun -np 4 python3 datasets/build_plate.py --out data/plate_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
 
 ### 2.4 Thermal Diffusion Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 20 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
 ```bash
-mpirun -np 4 python3 datasets/build_thermal.py --out data/thermal_dataset --num 100 --nx 100 --ny 100 --nev 20
+mpirun -np 4 python3 datasets/build_thermal.py --out data/thermal_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
 ### 2.5 Piezoelectric Coupled Field Dataset
 
 ```bash
-mpirun -np 4 python3 datasets/build_piezo.py --out data/piezo_dataset --num 100 --nx 71 --ny 71 --nev 20 --no_solve
+mpirun -np 4 python3 datasets/build_piezo.py --out data/piezo_dataset --num 100 --nx 71 --ny 71 --nev 500 --no_solve
 ```
 ## 3. Output Structure
 
