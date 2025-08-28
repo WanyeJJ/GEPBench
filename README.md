@@ -1,33 +1,39 @@
 # GEP Dataset Generation
 
-This project provides a suite of scripts to generate large-scale datasets for various physical systems governed by Partial Differential Equations (PDEs). It focuses on Generalized Eigenvalue Problems (GEP) and uses MPI with PETSc/SLEPc for high-performance, parallel computation.
+This project provides a suite of scripts to generate large-scale datasets for various physical systems governed by Partial Differential Equations (PDEs). It focuses on Generalized Eigenvalue Problems (GEP) and uses MPI with PETSc/SLEPc for high-performance, parallel computation. The covered simulations include:
+
+* EGFR Electronic Structure
+* Electromagnetic Cavity Resonance
+* Kirchhoff-Love Plate Vibration
+* 2D Thermal Diffusion
+* Piezoelectric Coupled-Fields
 
 ---
 
-## 1. Environment Setup
+## 1. Prerequisites
 
-Before running any generation scripts, you must configure the runtime environment for PETSc and SLEPc.
+Before you begin, ensure you have the following installed:
 
-### 1.1 The `setup_env.sh` Script
+* A working MPI implementation (e.g., Open MPI, MPICH)
+* PETSc
+* SLEPc
+* Python 3 with the `mpi4py` and `scipy` packages
 
-This shell script sets up all necessary environment variables, including paths to the PETSc and SLEPc libraries.
+---
+
+## 2. Environment Setup (`setup_env.sh`)
+
+Before running any generation scripts, you must configure the runtime environment for PETSc and SLEPc. The `setup_env.sh` script handles the setup of all necessary environment variables.
+
+### 2.1 How to Use
+
+In your terminal, you **must** execute this script using the `source` command to ensure that the environment variables are applied to your current session.
 
 ```bash
-#!/bin/bash
-
-# PETSc and SLEPc Environment Setup
-export PETSC_DIR=/usr/local/petsc
-export SLEPC_DIR=/usr/local/slepc
-export LD_LIBRARY_PATH=/usr/local/petsc/lib:/usr/local/slepc/lib:$LD_LIBRARY_PATH
-export PKG_CONFIG_PATH=/usr/local/petsc/lib/pkgconfig:/usr/local/slepc/lib/pkgconfig:$PKG_CONFIG_PATH
-
-# MPI settings for running as root (if needed)
-export OMPI_ALLOW_RUN_AS_ROOT=1
-export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
-```
+source setup_env.sh
 
 
-## 2. Dataset Generation
+## 3. Dataset Generation
 
 All datasets are generated in parallel using mpirun.
 The general command format is:
@@ -47,35 +53,35 @@ mpirun -np <num_processes> python3 datasets/<script_name>.py --out <output_dir> 
 
 - <num_eigenvalues>: The number of smallest eigenvalues to solve for each sample.
 
-### 2.1 EGFR Dataset
+### 3.1 EGFR Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 50000 × 50000, solving for the 500 smallest eigenvalues:
 
 ```bash
-mpirun -np 4 python3 datasets/build_egfr_parallel.py --out data/egfr_dataset --num 100 --nbas 10000 --nev 500
+mpirun -np 4 python3 datasets/build_egfr_parallel.py --out data/egfr_dataset --num 100 --nbas 50000 --nev 500
 ```
 
-### 2.2 Electromagnetic Cavity (EM Cavity) Dataset
+### 3.2 Electromagnetic Cavity (EM Cavity) Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 50000 × 50000, solving for the 500 smallest eigenvalues:
 
 ```bash
 mpirun -np 4 python3 datasets/build_em_cavity.py --out data/em_cavity_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
-### 2.3 Plate Vibration Dataset
+### 3.3 Plate Vibration Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 50000 × 50000, solving for the 500 smallest eigenvalues:
 ```bash
 mpirun -np 4 python3 datasets/build_plate.py --out data/plate_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
 
-### 2.4 Thermal Diffusion Dataset
+### 3.4 Thermal Diffusion Dataset
 
-Generate 100 samples, each with a matrix size of 10000 × 10000, solving for the 500 smallest eigenvalues:
+Generate 100 samples, each with a matrix size of 50000 × 50000, solving for the 500 smallest eigenvalues:
 ```bash
 mpirun -np 4 python3 datasets/build_thermal.py --out data/thermal_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
-### 2.5 Piezoelectric Coupled Field Dataset
+### 3.5 Piezoelectric Coupled Field Dataset
 
 ```bash
 mpirun -np 4 python3 datasets/build_piezo.py --out data/piezo_dataset --num 100 --nx 71 --ny 71 --nev 500 --no_solve
