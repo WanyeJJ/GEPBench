@@ -31,7 +31,7 @@ In your terminal, you **must** execute this script using the `source` command to
 
 ```bash
 source setup_env.sh
-
+```
 
 ## 3. Dataset Generation
 
