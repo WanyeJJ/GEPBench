@@ -1,0 +1,12 @@
+{
+  "problem": "Electromagnetic Cavity TE (emulated sparse, parallel)",
+  "nx": 100,
+  "ny": 100,
+  "hx": 0.009900990099009901,
+  "hy": 0.009900990099009901,
+  "nev": 100,
+  "grf_sigma_cells": 3.0,
+  "eps_mean": 1.0,
+  "eps_amp": 0.2,
+  "mu_const": 1.0
+}

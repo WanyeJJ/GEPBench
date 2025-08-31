@@ -1,0 +1,12 @@
+{
+  "problem": "2D Thermal Diffusion (emulated sparse, parallel)",
+  "nx": 100,
+  "ny": 100,
+  "hx": 0.009900990099009901,
+  "hy": 0.009900990099009901,
+  "nev": 100,
+  "grf_sigma_cells": 3.0,
+  "k_mean": 1.0,
+  "k_amp": 0.2,
+  "c_const": 1.0
+}
