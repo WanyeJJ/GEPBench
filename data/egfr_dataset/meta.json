@@ -1,0 +1,5 @@
+{
+  "problem": "EGFR Electronic Structure (emulated sparse, parallel)",
+  "nbas": 10000,
+  "nev": 100
+}
