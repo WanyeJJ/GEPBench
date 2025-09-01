@@ -102,6 +102,8 @@ After successful execution, each dataset will be organized in the specified outp
     └── eigvecs.npy        # Computed eigenvectors (if solved)
 ```
 
+---
+
 ## 5. Mathematical Models and Problem Settings
 
 This section provides the detailed mathematical formulation, input parameters, physical meanings, and algorithmic implementation notes for each dataset problem.
@@ -109,7 +111,7 @@ This section provides the detailed mathematical formulation, input parameters, p
 ### 5.1 Kirchhoff–Love Plate Vibration
 
 **Governing PDE**  
-[cite_start]The free vibration of thin plates is governed by the biharmonic equation[cite: 3]:
+The free vibration of thin plates is governed by the biharmonic equation:
 
 $$
 D \Delta^2 w(x,y) = \rho h \, \frac{\partial^2 w(x,y,t)}{\partial t^2},
@@ -120,72 +122,72 @@ with displacement 
 $$
 w(x,y,t) = \phi(x,y)\cos(\omega t).
 $$
- [cite_start][cite: 15]
-[cite_start]This leads to the eigenvalue problem[cite: 15]:
+
+This leads to the eigenvalue problem:
 
 $$
 D \Delta^2 \phi(x,y) = \lambda \phi(x,y), \quad \lambda = \rho h \omega^2.
 $$
- [cite_start][cite: 16]
+
 **Matrix Formulation (after FEM discretization)**  
 
 $$
 A u = \lambda M u
 $$
- [cite_start][cite: 22]
-- [cite_start]\(A\): stiffness matrix (assembled from biharmonic operator) [cite: 24]  
-- [cite_start]\(M\): mass matrix [cite: 25]  
-- [cite_start]\(u\): discretized displacement vector [cite: 26]  
-- [cite_start]\(\lambda\): squared natural frequency (\(\rho h \omega^2\)) [cite: 27]  
+
+- \(A\): stiffness matrix (assembled from biharmonic operator)  
+- \(M\): mass matrix  
+- \(u\): discretized displacement vector  
+- \(\lambda\): squared natural frequency (\(\rho h \omega^2\))  
 
 **Input Parameters & Physical Meaning**  
-- [cite_start]\(E(x,y)\): Young’s modulus field (elastic property) [cite: 29]  
-- [cite_start]\(\nu\): Poisson’s ratio (dimensionless coupling constant) [cite: 29]  
-- [cite_start]\(h(x,y)\): plate thickness distribution [cite: 29]  
-- [cite_start]\(\rho(x,y)\): density field [cite: 29]  
+- \(E(x,y)\): Young’s modulus field (elastic property)  
+- \(\nu\): Poisson’s ratio (dimensionless coupling constant)  
+- \(h(x,y)\): plate thickness distribution  
+- \(\rho(x,y)\): density field  
 
-[cite_start]Boundary conditions: clamped (Dirichlet: displacement fixed at boundary)[cite: 30].
+Boundary conditions: clamped (Dirichlet: displacement fixed at boundary).
 
 **Implementation Note**  
-- [cite_start]Mixed FEM with auxiliary variable \(\psi = \Delta w\). [cite: 17]  
-- [cite_start]Assembled into generalized eigenvalue problem \(Au = \lambda M u\). [cite: 21, 22]  
+- Mixed FEM with auxiliary variable \(\psi = \Delta w\).  
+- Assembled into generalized eigenvalue problem \(Au = \lambda M u\).  
 
 ---
 
 ### 5.2 EGFR Electronic Structure (Quantum Hamiltonian)
 
 **Governing PDE (Hartree-Fock-Roothaan Equation)**
-[cite_start]The electronic structure is described by the time-independent Schrödinger equation [cite: 34][cite_start], which takes the following form in the Hartree-Fock approximation[cite: 34]:
+The electronic structure is described by the time-independent Schrödinger equation, which takes the following form in the Hartree-Fock approximation:
 
 $$
 \left(-\frac{1}{2}\nabla^{2}+V_{eff}(r)\right)\psi_{i}(r)=\epsilon_{i}\psi_{i}(r), \quad r\in\mathbb{R}^{3}
 $$
- [cite_start][cite: 35]
--   [cite_start]$\psi_{i}(r)$: The spatial orbital function for the $i$-th electron (the eigenfunction)[cite: 36].
--   [cite_start]$\epsilon_{i}$: The energy corresponding to the $i$-th orbital (the eigenvalue)[cite: 37].
--   [cite_start]$V_{eff}(r)$: The effective potential energy field, which includes nuclear-electron Coulomb potential, electron-electron repulsion, and exchange-correlation potential[cite: 38, 39, 40, 41].
--   [cite_start]$\nabla^{2}$: The Laplacian operator representing the kinetic energy term[cite: 42]. [cite_start]The $-\frac{1}{2}$ factor is a result of using atomic units[cite: 43].
+
+-   $\psi_{i}(r)$: The spatial orbital function for the $i$-th electron (the eigenfunction).
+-   $\epsilon_{i}$: The energy corresponding to the $i$-th orbital (the eigenvalue).
+-   $V_{eff}(r)$: The effective potential energy field, which includes nuclear-electron Coulomb potential, electron-electron repulsion, and exchange-correlation potential.
+-   $\nabla^{2}$: The Laplacian operator representing the kinetic energy term. The $-\frac{1}{2}$ factor is a result of using atomic units.
 
 **Matrix Formulation (after discretization)**
-[cite_start]After spatial discretization using a method like the Finite Difference Method (FDM), the PDE is converted into a generalized eigenvalue problem[cite: 44]:
+After spatial discretization using a method like the Finite Difference Method (FDM), the PDE is converted into a generalized eigenvalue problem:
 
 $$
 A\psi_{i}=\epsilon_{i}M\psi_{i}
 $$
- [cite_start][cite: 45]
--   [cite_start]$A \in \mathbb{R}^{n \times n}$: The discretized Hamiltonian matrix [cite: 46][cite_start], often represented as a sum of the kinetic energy matrix ($T$) and the diagonal potential energy matrix ($V$)[cite: 47].
--   [cite_start]$M \in \mathbb{R}^{n \times n}$: The mass matrix[cite: 48]. [cite_start]For FDM, this is typically the identity matrix[cite: 48].
--   [cite_start]$\psi_{i} \in \mathbb{R}^{n}$: The discrete eigenvector for the $i$-th orbital[cite: 49].
--   [cite_start]$\epsilon_{i}$: The eigenvalue corresponding to the $i$-th orbital's energy[cite: 50].
+
+-   $A \in \mathbb{R}^{n \times n}$: The discretized Hamiltonian matrix, often represented as a sum of the kinetic energy matrix ($T$) and the diagonal potential energy matrix ($V$).
+-   $M \in \mathbb{R}^{n \times n}$: The mass matrix. For FDM, this is typically the identity matrix.
+-   $\psi_{i} \in \mathbb{R}^{n}$: The discrete eigenvector for the $i$-th orbital.
+-   $\epsilon_{i}$: The eigenvalue corresponding to the $i$-th orbital's energy.
 
 **Input Parameters & Physical Meaning**
--   [cite_start]$Z_{i}$: The atomic number for the $i$-th atom (e.g., Hydrogen=1, Carbon=6), which defines the nuclear charge[cite: 52].
--   [cite_start]$R_{i} \in \mathbb{R}^{3}$: The 3D coordinates of each atom, defining the molecular geometry[cite: 52].
--   [cite_start]$N$: The total number of atoms, which determines the overall size and complexity of the system[cite: 52].
--   [cite_start]Total charge / number of electrons: This determines the electron filling arrangement for the self-consistent field solution[cite: 52].
+-   $Z_{i}$: The atomic number for the $i$-th atom (e.g., Hydrogen=1, Carbon=6), which defines the nuclear charge.
+-   $R_{i} \in \mathbb{R}^{3}$: The 3D coordinates of each atom, defining the molecular geometry.
+-   $N$: The total number of atoms, which determines the overall size and complexity of the system.
+-   Total charge / number of electrons: This determines the electron filling arrangement for the self-consistent field solution.
 
 **Implementation Note**
-[cite_start]The implementation involves discretizing the Schrödinger equation over a spatial grid using the Finite Difference Method (FDM)[cite: 44]. [cite_start]This transforms the differential equation into a matrix eigenvalue problem $A\psi = \epsilon M \psi$, which is then solved to find the orbital energies and wavefunctions[cite: 45].
+The implementation involves discretizing the Schrödinger equation over a spatial grid using the Finite Difference Method (FDM). This transforms the differential equation into a matrix eigenvalue problem $A\psi = \epsilon M \psi$, which is then solved to find the orbital energies and wavefunctions.
 
 ---
 
@@ -197,24 +199,24 @@ $$
 \nabla \cdot \left( \frac{1}{\mu(x,y)} \nabla E_z(x,y) \right) = -\lambda \, \epsilon(x,y) E_z(x,y),
 \quad \lambda = \omega^2,
 $$
- [cite_start][cite: 57, 58]
-[cite_start]where \(E_z(x,y)\) is the scalar out-of-plane electric field[cite: 59].
+
+where \(E_z(x,y)\) is the scalar out-of-plane electric field.
 
 **Matrix Formulation**  
 
 $$
 A e = \lambda M e
 $$
- [cite_start][cite: 69]
-- [cite_start]\(A_{ij} = \int_\Omega \frac{1}{\mu} \nabla \phi_i \cdot \nabla \phi_j \, dx\) [cite: 68]  
-- [cite_start]\(M_{ij} = \int_\Omega \epsilon \, \phi_i \phi_j \, dx\) [cite: 71]  
+
+- \(A_{ij} = \int_\Omega \frac{1}{\mu} \nabla \phi_i \cdot \nabla \phi_j \, dx\)  
+- \(M_{ij} = \int_\Omega \epsilon \, \phi_i \phi_j \, dx\)  
 
 **Input Parameters & Physical Meaning**  
-- [cite_start]\(\epsilon(x,y)\): permittivity distribution (affects resonance modes) [cite: 60, 75]  
-- [cite_start]\(\mu(x,y)\): permeability distribution (often constant \(\mu_0\)) [cite: 61]  
+- \(\epsilon(x,y)\): permittivity distribution (affects resonance modes)  
+- \(\mu(x,y)\): permeability distribution (often constant \(\mu_0\))  
 
 **Implementation Note**  
-- [cite_start]Linear FEM discretization on rectangular mesh. [cite: 64]  
+- Linear FEM discretization on rectangular mesh.  
 - Eigenvalue problem solved with Krylov-Schur / JD / LOBPCG solvers.  
 
 ---
@@ -222,38 +224,38 @@ $$
 ### 5.4 Piezoelectric Coupled-Field Modes
 
 **Governing Equations**  
-[cite_start]Piezoelectric materials couple mechanical strain and electric displacement[cite: 77]. [cite_start]The linearized constitutive relations are[cite: 86]:
+Piezoelectric materials couple mechanical strain and electric displacement. The linearized constitutive relations are:
 
 $$
 \sigma_{ij} = c_{ijkl} \varepsilon_{kl} - e_{kij} E_k,
 $$
- [cite_start][cite: 87]
+
 $$
 D_i = e_{ikl} \varepsilon_{kl} + \epsilon_{ij} E_j,
 $$
- [cite_start][cite: 88]
+
 where stress \(\sigma\), strain \(\varepsilon\), electric field \(E\), and displacement \(D\) interact.
 
 **Generalized Eigenvalue Problem (after FEM discretization):**
 
 $$
-\begin{bmatrix}K_{uu}&K_{u\phi}\\ K_{\phi u}&K_{\phi\phi}\end{bmatrix}\begin{bmatrix}u\\ \phi\end{bmatrix}=\omega^{2}\begin{bmatrix}M_{uu}&0\\ 0&0\end{bmatrix}\begin{bmatrix}u\\ \phi\end{bmatrix}
+A u = \lambda M u
 $$
- [cite_start][cite: 107]
-- [cite_start]\(A\): coupled stiffness–electrical matrix [cite: 101]  
-- [cite_start]\(M\): mass matrix (mechanical inertia + dielectric effects) [cite: 102, 112]  
-- [cite_start]\(u\): vector of mechanical + electrical degrees of freedom [cite: 107]  
+
+- \(A\): coupled stiffness–electrical matrix  
+- \(M\): mass matrix (mechanical inertia + dielectric effects)  
+- \(u\): vector of mechanical + electrical degrees of freedom  
 
 **Input Parameters & Physical Meaning**  
-- [cite_start]\(c_{ijkl}(x,y)\): elastic stiffness tensor [cite: 114]  
-- [cite_start]\(e_{ijk}(x,y)\): piezoelectric coupling tensor [cite: 114]  
-- [cite_start]\(\epsilon_{ij}(x,y)\): dielectric tensor [cite: 114]  
-- [cite_start]\(\rho(x,y)\): density distribution [cite: 114]  
-- [cite_start]Geometry & boundary conditions: free/constrained edges, electrodes [cite: 114]  
+- \(c_{ijkl}(x,y)\): elastic stiffness tensor  
+- \(e_{ijk}(x,y)\): piezoelectric coupling tensor  
+- \(\epsilon_{ij}(x,y)\): dielectric tensor  
+- \(\rho(x,y)\): density distribution  
+- Geometry & boundary conditions: free/constrained edges, electrodes  
 
 **Implementation Note**  
-- [cite_start]Mixed FEM formulation with mechanical and electrical DOFs. [cite: 105]  
-- [cite_start]Assembled into large block matrix system. [cite: 107]  
+- Mixed FEM formulation with mechanical and electrical DOFs.  
+- Assembled into large block matrix system.  
 
 ---
 
@@ -264,22 +266,24 @@ $$
 $$
 - \nabla \cdot \big( k(x,y) \nabla u(x,y) \big) = \lambda c(x,y) u(x,y),
 $$
- [cite_start][cite: 118]
-[cite_start]where \(u(x,y)\) is the temperature mode shape [cite: 119][cite_start], \(\lambda\) is the decay rate[cite: 123].
+
+where \(u(x,y)\) is the temperature mode shape, \(\lambda\) is the decay rate.
 
 **Matrix Formulation**  
 
 $$
-K u_h = \lambda M u_h
+K u = \lambda M u
 $$
- [cite_start][cite: 129]
-- [cite_start]\(K\): stiffness matrix from thermal conductivity [cite: 126]  
-- [cite_start]\(M\): mass matrix from heat capacity density [cite: 127]  
+
+- \(K\): stiffness matrix from thermal conductivity  
+- \(M\): mass matrix from heat capacity density  
 
 **Input Parameters & Physical Meaning**  
-- [cite_start]\(k(x,y)\): thermal conductivity (heat transport ability) [cite: 130]  
-- [cite_start]\(c(x,y)\): volumetric heat capacity (thermal inertia) [cite: 130]  
+- \(k(x,y)\): thermal conductivity (heat transport ability)  
+- \(c(x,y)\): volumetric heat capacity (thermal inertia)  
 
 **Implementation Note**  
-- [cite_start]FEM discretization of heat operator. [cite: 125]  
-- [cite_start]Eigenmodes correspond to spatial thermal decay patterns. [cite: 116]
+- FEM discretization of heat operator.  
+- Eigenmodes correspond to spatial thermal decay patterns.
+
+---
