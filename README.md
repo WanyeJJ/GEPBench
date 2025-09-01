@@ -224,6 +224,7 @@ $$
 **Implementation Note**  
 - Linear FEM discretization on rectangular mesh.  
 - Eigenvalue problem solved with Krylov-Schur / JD / LOBPCG solvers.  
+ 
 
 ---
 
