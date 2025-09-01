@@ -288,6 +288,7 @@ $$
 
 ```math
 - \nabla \cdot \big( k(x,y) \nabla u(x,y) \big) = \lambda c(x,y) u(x,y),
+```
 
 where $u(x,y)$ is the temperature mode shape, $\lambda$ is the decay rate.
 
