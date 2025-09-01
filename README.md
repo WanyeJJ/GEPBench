@@ -101,3 +101,168 @@ After successful execution, each dataset will be organized in the specified outp
     ├── eigvals.npy        # Computed eigenvalues (if solved)
     └── eigvecs.npy        # Computed eigenvectors (if solved)
 ```
+
+---
+
+## 5. Mathematical Models and Problem Settings
+
+This section provides the detailed mathematical formulation, input parameters, physical meanings, and algorithmic implementation notes for each dataset problem.
+
+### 5.1 Kirchhoff–Love Plate Vibration
+
+**Governing PDE**  
+The free vibration of thin plates is governed by the biharmonic equation:
+
+\[
+D \Delta^2 w(x,y) = \rho h \, \frac{\partial^2 w(x,y,t)}{\partial t^2},
+\]
+
+with displacement \(w(x,y,t) = \phi(x,y)\cos(\omega t)\). This leads to the eigenvalue problem:
+
+\[
+D \Delta^2 \phi(x,y) = \lambda \phi(x,y), \quad \lambda = \rho h \omega^2.
+\]
+
+**Matrix Formulation (after FEM discretization)**  
+\[
+A u = \lambda M u
+\]
+
+- \(A\): stiffness matrix (assembled from biharmonic operator)  
+- \(M\): mass matrix  
+- \(u\): discretized displacement vector  
+- \(\lambda\): squared natural frequency (\(\rho h \omega^2\))  
+
+**Input Parameters & Physical Meaning**  
+- \(E(x,y)\): Young’s modulus field (elastic property)  
+- \(\nu\): Poisson’s ratio (dimensionless coupling constant)  
+- \(h(x,y)\): plate thickness distribution  
+- \(\rho(x,y)\): density field  
+
+Boundary conditions: clamped (Dirichlet: displacement fixed at boundary).
+
+**Implementation Note**  
+- Mixed FEM with auxiliary variable \(\psi = \Delta w\).  
+- Assembled into generalized eigenvalue problem \(Au = \lambda M u\).  
+
+---
+
+### 5.2 EGFR Electronic Structure (Quantum Hamiltonian)
+
+**Governing Equation**  
+Discretized Schrödinger equation (Hartree–Fock–Roothaan framework) on a spatial grid:
+
+\[
+H \psi = \lambda S \psi
+\]
+
+- \(H\): Hamiltonian operator (kinetic + potential energy)  
+- \(S\): overlap matrix (from discretization)  
+- \(\lambda\): orbital energies (eigenvalues)  
+- \(\psi\): molecular orbitals  
+
+**Input Parameters & Physical Meaning**  
+- \(Z_i\): atomic number of the \(i\)-th nucleus  
+- \(R_i \in \mathbb{R}^3\): atomic coordinates  
+- \(N\): total number of atoms (controls system size)  
+- Total charge / electron number: determines self-consistent electron filling  
+
+**Implementation Note**  
+- Discretize Schrödinger operator with finite differences (FDM).  
+- Solve generalized eigenvalue problem with PETSc/SLEPc.  
+
+---
+
+### 5.3 Electromagnetic Cavity Resonance (TE Modes)
+
+**Governing PDE (2D TE case)**  
+
+\[
+\nabla \cdot \left( \frac{1}{\mu(x,y)} \nabla E_z(x,y) \right) = -\lambda \, \epsilon(x,y) E_z(x,y),
+\quad \lambda = \omega^2,
+\]
+
+where \(E_z(x,y)\) is the scalar out-of-plane electric field.
+
+**Matrix Formulation**  
+\[
+A e = \lambda M e
+\]
+
+- \(A_{ij} = \int_\Omega \frac{1}{\mu} \nabla \varphi_i \cdot \nabla \varphi_j \, dx\)  
+- \(M_{ij} = \int_\Omega \epsilon \, \varphi_i \varphi_j \, dx\)  
+
+**Input Parameters & Physical Meaning**  
+- \(\epsilon(x,y)\): permittivity distribution (affects resonance modes)  
+- \(\mu(x,y)\): permeability distribution (often constant \(\mu_0\))  
+
+**Implementation Note**  
+- Linear FEM discretization on rectangular mesh.  
+- Eigenvalue problem solved with Krylov-Schur / JD / LOBPCG solvers.  
+
+---
+
+### 5.4 Piezoelectric Coupled-Field Modes
+
+**Governing Equations**  
+Piezoelectric materials couple mechanical strain and electric displacement. The linearized constitutive relations are:
+
+\[
+\sigma_{ij} = c_{ijkl} \varepsilon_{kl} - e_{kij} E_k,
+\quad D_i = e_{ikl} \varepsilon_{kl} + \epsilon_{ij} E_j,
+\]
+
+where stress \(\sigma\), strain \(\varepsilon\), electric field \(E\), and displacement \(D\) interact.
+
+**Generalized Eigenvalue Problem** (after FEM discretization):
+
+\[
+A u = \lambda M u
+\]
+
+- \(A\): coupled stiffness–electrical matrix  
+- \(M\): mass matrix (mechanical inertia + dielectric effects)  
+- \(u\): vector of mechanical + electrical degrees of freedom  
+
+**Input Parameters & Physical Meaning**  
+- \(c_{ijkl}(x,y)\): elastic stiffness tensor  
+- \(e_{ijk}(x,y)\): piezoelectric coupling tensor  
+- \(\epsilon_{ij}(x,y)\): dielectric tensor  
+- \(\rho(x,y)\): density distribution  
+- Geometry & boundary conditions: free/constrained edges, electrodes  
+
+**Implementation Note**  
+- Mixed FEM formulation with mechanical and electrical DOFs.  
+- Assembled into large block matrix system.  
+
+---
+
+### 5.5 Thermal Diffusion Eigenmodes
+
+**Governing PDE**  
+
+\[
+- \nabla \cdot \big( k(x,y) \nabla u(x,y) \big) = \lambda c(x,y) u(x,y),
+\]
+
+where \(u(x,y)\) is the temperature mode shape, \(\lambda\) is the decay rate.
+
+**Matrix Formulation**  
+
+\[
+K u = \lambda M u
+\]
+
+- \(K\): stiffness matrix from thermal conductivity  
+- \(M\): mass matrix from heat capacity density  
+
+**Input Parameters & Physical Meaning**  
+- \(k(x,y)\): thermal conductivity (heat transport ability)  
+- \(c(x,y)\): volumetric heat capacity (thermal inertia)  
+
+**Implementation Note**  
+- FEM discretization of heat operator.  
+- Eigenmodes correspond to spatial thermal decay patterns.  
+
+---
+
