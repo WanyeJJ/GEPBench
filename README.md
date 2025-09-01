@@ -209,13 +209,11 @@ A e = \lambda M e
 $$
 
 -   Stiffness Matrix:
-    $$
+    ```math
     A_{ij} = \int_\Omega \frac{1}{\mu} \nabla \phi_i \cdot \nabla \phi_j \, dx
-    $$
 -   Mass Matrix:
-    $$
+    ```math
     M_{ij} = \int_\Omega \epsilon \, \phi_i \phi_j \, dx
-    $$
 
 **Input Parameters & Physical Meaning**  
 -   $\epsilon(x,y)$: permittivity distribution (affects resonance modes)
