@@ -41,17 +41,12 @@ The general command format is:
 mpirun -np <num_processes> python3 datasets/<script_name>.py --out <output_dir> --num <num_samples> --nx <X_dim> --ny <Y_dim> --nev <num_eigenvalues>
 ```
 
-- <num_processes>: Recommended to set equal to the number of CPU cores on your machine (e.g., 4 or 8).
-
-- <script_name>: The Python script corresponding to the dataset you want to generate.
-
-- <output_dir>: The root directory where the generated dataset will be saved.
-
-- <num_samples>: Total number of samples to generate.
-
-- <X_dim> / <Y_dim>: Defines the discretized mesh size of the problem domain. The final matrix size is nx * ny.
-
-- <num_eigenvalues>: The number of smallest eigenvalues to solve for each sample.
+- `<num_processes>`: Recommended to set equal to the number of CPU cores on your machine (e.g., 4 or 8).
+- `<script_name>`: The Python script corresponding to the dataset you want to generate.
+- `<output_dir>`: The root directory where the generated dataset will be saved.
+- `<num_samples>`: Total number of samples to generate.
+- `<X_dim>` / `<Y_dim>`: Defines the discretized mesh size of the problem domain. The final matrix size is nx * ny.
+- `<num_eigenvalues>`: The number of smallest eigenvalues to solve for each sample.
 
 ### 3.1 EGFR Dataset
 
