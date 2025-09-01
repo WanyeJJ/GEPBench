@@ -33,20 +33,25 @@ In your terminal, you **must** execute this script using the `source` command to
 source setup_env.sh
 ```
 
+---
+
 ## 3. Dataset Generation
 
-All datasets are generated in parallel using mpirun.
+All datasets are generated in parallel using `mpirun`.  
 The general command format is:
+
 ```bash
 mpirun -np <num_processes> python3 datasets/<script_name>.py --out <output_dir> --num <num_samples> --nx <X_dim> --ny <Y_dim> --nev <num_eigenvalues>
 ```
 
-- `<num_processes>`: Recommended to set equal to the number of CPU cores on your machine (e.g., 4 or 8).
-- `<script_name>`: The Python script corresponding to the dataset you want to generate.
-- `<output_dir>`: The root directory where the generated dataset will be saved.
-- `<num_samples>`: Total number of samples to generate.
-- `<X_dim>` / `<Y_dim>`: Defines the discretized mesh size of the problem domain. The final matrix size is nx * ny.
-- `<num_eigenvalues>`: The number of smallest eigenvalues to solve for each sample.
+- `<num_processes>`: Recommended to set equal to the number of CPU cores on your machine (e.g., 4 or 8).  
+- `<script_name>`: The Python script corresponding to the dataset you want to generate.  
+- `<output_dir>`: The root directory where the generated dataset will be saved.  
+- `<num_samples>`: Total number of samples to generate.  
+- `<X_dim>` / `<Y_dim>`: Defines the discretized mesh size of the problem domain. The final matrix size is `nx * ny`.  
+- `<num_eigenvalues>`: The number of smallest eigenvalues to solve for each sample.  
+
+---
 
 ### 3.1 EGFR Dataset
 
@@ -58,33 +63,35 @@ mpirun -np 4 python3 datasets/build_egfr_parallel.py --out data/egfr_dataset --n
 
 ### 3.2 Electromagnetic Cavity (EM Cavity) Dataset
 
-Generate 100 samples, each with a matrix size of 50000 × 50000, solving for the 500 smallest eigenvalues:
-
 ```bash
 mpirun -np 4 python3 datasets/build_em_cavity.py --out data/em_cavity_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
+
 ### 3.3 Plate Vibration Dataset
 
-Generate 100 samples, each with a matrix size of 50000 × 50000, solving for the 500 smallest eigenvalues:
 ```bash
 mpirun -np 4 python3 datasets/build_plate.py --out data/plate_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
 
 ### 3.4 Thermal Diffusion Dataset
 
-Generate 100 samples, each with a matrix size of 50000 × 50000, solving for the 500 smallest eigenvalues:
 ```bash
 mpirun -np 4 python3 datasets/build_thermal.py --out data/thermal_dataset --num 100 --nx 100 --ny 100 --nev 500
 ```
+
 ### 3.5 Piezoelectric Coupled Field Dataset
 
 ```bash
 mpirun -np 4 python3 datasets/build_piezo.py --out data/piezo_dataset --num 100 --nx 71 --ny 71 --nev 500 --no_solve
 ```
-## 3. Output Structure
+
+---
+
+## 4. Output Structure
 
 After successful execution, each dataset will be organized in the specified output directory with the following structure:
 
+```bash
 <output_dir>/
 ├── meta.json              # Metadata of the dataset
 ├── <global_matrix>.npz    # (Optional) Shared matrix across all samples
@@ -93,3 +100,4 @@ After successful execution, each dataset will be organized in the specified outp
     ├── B.npz              # Sample-specific matrix B
     ├── eigvals.npy        # Computed eigenvalues (if solved)
     └── eigvecs.npy        # Computed eigenvectors (if solved)
+```
