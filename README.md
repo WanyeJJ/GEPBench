@@ -113,20 +113,27 @@ This section provides the detailed mathematical formulation, input parameters, p
 **Governing PDE**  
 The free vibration of thin plates is governed by the biharmonic equation:
 
-\[
+$$
 D \Delta^2 w(x,y) = \rho h \, \frac{\partial^2 w(x,y,t)}{\partial t^2},
-\]
+$$
 
-with displacement \(w(x,y,t) = \phi(x,y)\cos(\omega t)\). This leads to the eigenvalue problem:
+with displacement 
 
-\[
+$$
+w(x,y,t) = \phi(x,y)\cos(\omega t).
+$$
+
+This leads to the eigenvalue problem:
+
+$$
 D \Delta^2 \phi(x,y) = \lambda \phi(x,y), \quad \lambda = \rho h \omega^2.
-\]
+$$
 
 **Matrix Formulation (after FEM discretization)**  
-\[
+
+$$
 A u = \lambda M u
-\]
+$$
 
 - \(A\): stiffness matrix (assembled from biharmonic operator)  
 - \(M\): mass matrix  
@@ -152,9 +159,9 @@ Boundary conditions: clamped (Dirichlet: displacement fixed at boundary).
 **Governing Equation**  
 Discretized Schrödinger equation (Hartree–Fock–Roothaan framework) on a spatial grid:
 
-\[
+$$
 H \psi = \lambda S \psi
-\]
+$$
 
 - \(H\): Hamiltonian operator (kinetic + potential energy)  
 - \(S\): overlap matrix (from discretization)  
@@ -177,17 +184,18 @@ H \psi = \lambda S \psi
 
 **Governing PDE (2D TE case)**  
 
-\[
+$$
 \nabla \cdot \left( \frac{1}{\mu(x,y)} \nabla E_z(x,y) \right) = -\lambda \, \epsilon(x,y) E_z(x,y),
 \quad \lambda = \omega^2,
-\]
+$$
 
 where \(E_z(x,y)\) is the scalar out-of-plane electric field.
 
 **Matrix Formulation**  
-\[
+
+$$
 A e = \lambda M e
-\]
+$$
 
 - \(A_{ij} = \int_\Omega \frac{1}{\mu} \nabla \varphi_i \cdot \nabla \varphi_j \, dx\)  
 - \(M_{ij} = \int_\Omega \epsilon \, \varphi_i \varphi_j \, dx\)  
@@ -207,18 +215,21 @@ A e = \lambda M e
 **Governing Equations**  
 Piezoelectric materials couple mechanical strain and electric displacement. The linearized constitutive relations are:
 
-\[
+$$
 \sigma_{ij} = c_{ijkl} \varepsilon_{kl} - e_{kij} E_k,
-\quad D_i = e_{ikl} \varepsilon_{kl} + \epsilon_{ij} E_j,
-\]
+$$
+
+$$
+D_i = e_{ikl} \varepsilon_{kl} + \epsilon_{ij} E_j,
+$$
 
 where stress \(\sigma\), strain \(\varepsilon\), electric field \(E\), and displacement \(D\) interact.
 
-**Generalized Eigenvalue Problem** (after FEM discretization):
+**Generalized Eigenvalue Problem (after FEM discretization):**
 
-\[
+$$
 A u = \lambda M u
-\]
+$$
 
 - \(A\): coupled stiffness–electrical matrix  
 - \(M\): mass matrix (mechanical inertia + dielectric effects)  
@@ -241,17 +252,17 @@ A u = \lambda M u
 
 **Governing PDE**  
 
-\[
+$$
 - \nabla \cdot \big( k(x,y) \nabla u(x,y) \big) = \lambda c(x,y) u(x,y),
-\]
+$$
 
 where \(u(x,y)\) is the temperature mode shape, \(\lambda\) is the decay rate.
 
 **Matrix Formulation**  
 
-\[
+$$
 K u = \lambda M u
-\]
+$$
 
 - \(K\): stiffness matrix from thermal conductivity  
 - \(M\): mass matrix from heat capacity density  
@@ -265,4 +276,3 @@ K u = \lambda M u
 - Eigenmodes correspond to spatial thermal decay patterns.  
 
 ---
-
